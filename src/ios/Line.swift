@@ -81,8 +81,8 @@ final class Line {
         text = SCNText(string: "", extrusionDepth: 0.1)
         text.font = .systemFont(ofSize: 5)
         text.firstMaterial?.diffuse.contents = color
-        text.alignmentMode  = kCAAlignmentCenter
-        text.truncationMode = kCATruncationMiddle
+//        text.alignmentMode  = kCAAlignmentCenter
+//        text.truncationMode = kCATruncationMiddle
         text.firstMaterial?.isDoubleSided = true
         
         let textWrapperNode = SCNNode(geometry: text)
