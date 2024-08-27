@@ -69,6 +69,9 @@
         <source-file src="src/ios/Line.swift"/>
         <source-file src="src/ios/SCNVector3.swift"/>
 
+        <!-- Resources -->
+        <resource-file src="src/ios/Assets.xcassets" />
+
         <dependency id="cordova-plugin-add-swift-support" version="~2" />
     </platform>
 </plugin>
