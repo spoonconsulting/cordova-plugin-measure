@@ -70,7 +70,6 @@
         <source-file src="src/ios/SCNVector3.swift"/>
 
         <!-- Resources -->
-        <resource-file src="src/ios/Base.lproj/Main.storyboard" />
         <resource-file src="src/ios/Assets.xcassets" />
 
         <dependency id="cordova-plugin-add-swift-support" version="~2" />

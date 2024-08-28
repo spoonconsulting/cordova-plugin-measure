@@ -17,13 +17,23 @@ extension MeasurePlugin: ViewControllerDelegate {
         self.myViewController = nil
         
         result.setKeepCallbackAs(true)
-        commandDelegate!.send(result, callbackId: finishListenerCallbackId)
+        commandDelegate.send(result, callbackId: finishListenerCallbackId)
+    }
+    
+    func sendResultAndCloseView(captureResult: [String: String]) {
+        var result: CDVPluginResult
+        result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: captureResult)
+        myViewController.view.removeFromSuperview()
+        self.myViewController = nil
+        
+        result.setKeepCallbackAs(true)
+        commandDelegate.send(result, callbackId: captureAndFinishListenerCallbackId)
     }
 
     func onUpdateMeasure(nodeName: String) {
         guard let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: nodeName) else { return }
         result.setKeepCallbackAs(true)
-        commandDelegate!.send(result, callbackId: measureListenerCallbackId)
+        commandDelegate.send(result, callbackId: measureListenerCallbackId)
     }
     
     @objc func setMeasureListener(_ command: CDVInvokedUrlCommand) {
@@ -32,6 +42,10 @@ extension MeasurePlugin: ViewControllerDelegate {
     
     @objc func setFinishListener(_ command: CDVInvokedUrlCommand) {
         finishListenerCallbackId = command.callbackId
+    }
+    
+    @objc func setcaptureAndFinishListenerCallbackId(_ command: CDVInvokedUrlCommand) {
+        captureAndFinishListenerCallbackId = command.callbackId
     }
 
 }
