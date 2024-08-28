@@ -6,6 +6,7 @@ import ARKit
     func allowMultiple() -> Bool
     func closeView()
     func onUpdateMeasure(nodeName: String)
+    func sendResultAndCloseView(captureResult: [String: String])
 }
 
 final class ViewController: UIViewController {
@@ -136,8 +137,23 @@ extension ViewController {
     
     @IBAction func captureButtonTapped(button: UIButton) {
         let image = sceneView.snapshot();
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        delegate?.closeView();
+        let documentsDirectory = FileManager.default.temporaryDirectory.appendingPathComponent("cordova-measure")
+        let uuid = NSUUID().uuidString
+        let imageFile = documentsDirectory.appendingPathComponent(uuid + ".jpg")
+        let result: [String: String]
+
+        do {
+            try FileManager.default.createDirectory(at: documentsDirectory, withIntermediateDirectories: true, attributes: nil)
+            if let imageData = image.jpegData(compressionQuality: 0) {
+                try imageData.write(to: imageFile)
+                result = ["imagePath": imageFile.absoluteString, "message": "Snapshot saved successfully"]
+            } else {
+                result = ["message": "Failed to convert image to data"]
+            }
+        } catch {
+            result = ["message": "Error saving snapshot"]
+        }
+        delegate?.sendResultAndCloseView(captureResult: result)
     }
     
     @IBAction func closeButtonTapped(button: UIButton) {

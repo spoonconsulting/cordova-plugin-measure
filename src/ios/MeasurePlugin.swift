@@ -5,6 +5,7 @@ import SceneKit
 
     var measureListenerCallbackId: String!
     var finishListenerCallbackId: String!
+    var captureAndFinishListenerCallbackId: String!
     
     var myViewController: ViewController!
     
@@ -19,6 +20,7 @@ import SceneKit
                 let options = command.arguments[0] as! NSMutableDictionary
                 let multiplePointsEnabled = options.object(forKey: "allowMultiplePoints") as! Bool
                 self.allowMultiplePoints = multiplePointsEnabled
+                self.setcaptureAndFinishListenerCallbackId(command)
 
                 guard let superview = self.webView.superview else { return }
                 superview.insertSubview(self.myViewController.view, aboveSubview: self.webView)
